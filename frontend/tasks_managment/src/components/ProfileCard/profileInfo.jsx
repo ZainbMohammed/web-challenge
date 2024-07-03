@@ -15,9 +15,7 @@ const ProfileInfo = ({logoutHandler}) => {
                 <button className='text-sm text-slate-700 underline pt-2 hover:bg-primary' onClick={logoutHandler}>تسجيل الخروج</button>
             </div>
 
-
         </div>
     )
 }
-
 export default ProfileInfo

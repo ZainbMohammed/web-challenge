@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar/navbar';
 import PasswordInput from '../../components/Input/passwordInput';
 import { Link } from 'react-router-dom';
 import { validateEmail } from '../../utils/helper';
+import Logo from '../../assets/loogo.png'
 
 const Signup = () => {
 
@@ -35,10 +36,13 @@ const Signup = () => {
 
     }
     return <>
-        <Navbar />
+        {/* <Navbar /> */}
 
-        <div className='flex items-center justify-center mt-28'>
+        <div className='flex items-center justify-center mt-12'>
             <div className='w-96 border rounded-3xl shadow-2xl bg-white px-7 py-10'>
+                <div className='flex justify-center items-center mb-6'>
+                    <img className='w-28' src={Logo}></img>
+                </div>
                 <form onSubmit={signupHandler}>
                     <h4 className='text-2xl mb-7 text-center'>إنشاء حساب</h4>
 
@@ -67,7 +71,7 @@ const Signup = () => {
 
                     <button type='submit' className='btn-primary'>إنشاء حساب</button>
 
-                    <p className='text-sm text-center mt-4'>لديك حساب بالفعل؟{' '}
+                    <p className='text-sm text-center mt-2'>لديك حساب بالفعل؟{' '}
                         <Link to='/login' className='font-medium text-primary underline'>تسجيل الدخول</Link>
                     </p>
                 </form>
