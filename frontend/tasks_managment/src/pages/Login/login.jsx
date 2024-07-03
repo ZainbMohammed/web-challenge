@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar/navbar';
 import {Link} from 'react-router-dom';
 import PasswordInput from '../../components/Input/passwordInput';
 import { validateEmail } from '../../utils/helper';
+
 const Login = () => {
 
     const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ const Login = () => {
         }
 
         // api call
-    }   
+    };   
 
   return <>
     <Navbar />
@@ -63,6 +64,6 @@ const Login = () => {
     </div>
   
   </>
-}
+};
 
 export default Login
