@@ -71,7 +71,43 @@ app.post('/register', async (req,res) => {
     }
 
 })
+app.post('/login', async (req,res) => {
+    const {email,password} = req.body;
 
+    if (!email){
+        return res.status(400).json( {error: true,message: 'Email is required'} )
+    }
+
+    if (!password){
+        return res.status(400).json( {error: true,message: 'Password is required'} )
+    }
+
+    const user = await User.findOne({email:email});
+
+    if(!user) {
+        return res.status(400).json({message: 'User not found'})
+    }
+
+    if(user.email == email && user.password ==password){
+        const loginedUser = {user:user};
+        const accessToken = jwt.sign(loginedUser,process.env.ACCESS_SECRET_KEY,{
+            expiresIn:'36000m',
+
+        });
+
+        return res.json({
+            error:false,    
+            message: 'Login Successful',
+            email,
+            accessToken,    
+        })
+    }else{
+        return res.status(400).json({
+            error: true,
+            message: 'Invalid Credentials',
+        })
+    }
+});
 app.listen(8000);
 
 module.exports = app;
