@@ -47,11 +47,15 @@ const Home = () => {
         },
       }}
       contentLabel=''
-      className='w-[35%] max-h-3/4 border rounded-3xl shadow-2xl bg-white px-7 py-10 mx-auto mt-24'
+      className='w-[35%] max-h-3/4 border rounded-3xl shadow-2xl bg-white px-7 py-10 mx-auto mt-24 overflow-scroll'
       // className='w-[40%] max-h-3/4 bg-white rounded-md mx-auto mt-14 p-5 overflow-scroll '
     >
 
-    <Add_EditTask onClose={onClose} />
+    <Add_EditTask 
+      taskDate={openAddEditModel.date}
+      type={openAddEditModel.type}
+      onClose={onClose} 
+    />
     </Modal>
   </>
 };

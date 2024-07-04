@@ -1,12 +1,38 @@
 import React, { useState } from 'react'
 import {MdClose} from 'react-icons/md'
 
-const Add_EditTask = ({onClose}) => {
+const Add_EditTask = ({taskDate,type,onClose}) => {
 
     const [title, setTitle] = useState('');
     const [details, setDetails] = useState('');
+    const [error, setError] = useState(null);
     // const [title, setTitle] = useState('');
+// add new task 
+const addTask = async () => {}
 
+// edit task
+const editTask = async () => {}
+
+
+    const addTaskHandler = () => {
+        if(!title){
+            setError('ادخل عنوان المهمة');
+            return;
+        }
+        if(!details){
+            setError('ادخل تفاصيل المهمة');
+            return;
+        }
+
+        setError('');
+
+        if(type === 'add'){
+            addTask()
+        }else{
+            editTask()
+        }
+
+    }
     return <>
         <div className='relative'>
             <button className='w-8 h-8 rounded-full flex items-center justify-center absolute -left-4 -top-8 hover:text-slate-950 ' onClick={onClose}>
@@ -36,7 +62,8 @@ const Add_EditTask = ({onClose}) => {
 
                 />
             </div>
-            <button className='btn-primary font-medium mt-5 p-3' onClick={() => {}}>
+            {error && <p className='text-red-500 text-xs pt-4'>{error}</p>}
+            <button className='btn-primary font-medium mt-5 p-3' onClick={addTaskHandler}>
                 إضافة
             </button>
         </div>
