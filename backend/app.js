@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+const User = require('./Models/user.model.js');
 const config = require('./config.json');
 const mongoose = require('mongoose');
 
@@ -25,8 +25,9 @@ app.get('/',(req,res) => {
 });
 
 // register new user
-app.post('register', async (req,res) => {
-    const {fullName, email,password} = req.body;
+app.post('/register', async (req,res) => {
+    try{
+        const {fullName, email,password} = req.body;
 
     if (!fullName){
         return res.status(400).json( {error: true,message: 'Name is required'} )
@@ -39,6 +40,36 @@ app.post('register', async (req,res) => {
     if (!password){
         return res.status(400).json( {error: true,message: 'Password is required'} )
     }
+
+    const isUserExist = await User.findOne({email:email});
+
+    if(isUserExist){
+        return res.json({error: true,message: 'User already exist'})
+    }
+
+    const user = new User({
+        fullName,
+        email,
+        password
+    });
+    // insert new user
+    await user.save();
+
+    const accessToken = jwt.sign({user} , process.env.ACCESS_SECRET_KEY,{
+        expiresIn:'30m',
+    });
+    return res.json({
+        error: false,
+        user,
+        accessToken,
+        message: 'Registration Successful'
+    });
+
+    }catch(error){
+        return res.json({error: true,message: error.message})
+
+    }
+
 })
 
 app.listen(8000);
