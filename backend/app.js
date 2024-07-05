@@ -152,9 +152,9 @@ app.post("/add-task", authenticateToken, async (req, res) => {
 
 // edit exist task
 app.put("/edit-task", authenticateToken, async (req, res) => {
-    console.log( req.params.taskId);
-    console.log( req.body);
-    console.log( "================");
+  console.log(req.params.taskId);
+  console.log(req.body);
+  console.log("================");
   const taskId = req.params.taskId;
   const { title, details, isPinned } = req.body;
   const { user } = req.user;
@@ -178,21 +178,36 @@ app.put("/edit-task", authenticateToken, async (req, res) => {
     await task.save();
 
     return res.json({ error: false, task, message: "Task Edited Successful" });
-
   } catch (error) {
-    if (error.name === 'CastError') {
-        return res.status(400).json({ error: true, message: "Invalid task ID" });
+    if (error.name === "CastError") {
+      return res.status(400).json({ error: true, message: "Invalid task ID" });
     }
     // Handle other specific errors here
-    return res.status(500).json({ error: true, message: `Internal Server Error: ${error.message}` });
-}
+    return res.status(500).json({
+      error: true,
+      message: `Internal Server Error: ${error.message}`,
+    });
+  }
 });
 
 // for show all tasks for testing
-app.get("/tasks", async (req, res) => {
-  // get all courses from mongodb using Course model
-  const tasks = await Task.find();
-  res.json({ error: false, data: { tasks } });
+app.get("/tasks", authenticateToken, async (req, res) => {
+  const { user } = req.user;
+
+  try {
+    const tasks = await Task.find({ userId: user._id }).sort({ isPinned: -1 });
+    
+    res.json({
+      error: false,
+      tasks,
+      message: "All tasks retrieved successful",
+    });
+    
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: true, message: "Internal server error" });
+  } 
 });
 app.listen(8000);
 
