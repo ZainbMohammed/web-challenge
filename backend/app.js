@@ -3,7 +3,11 @@ require("dotenv").config();
 const config = require("./config.json");
 const mongoose = require("mongoose");
 
-mongoose.connect(config.connectionString);
+mongoose.connect(config.connectionString,{
+  // useNewUrlParser: true,
+  // useUnifiedTopology: true,
+  // serverSelectionTimeoutMS: 30000, 
+});
 
 const User = require("./Models/user.model.js");
 const Task = require("./Models/task.model");
@@ -118,8 +122,8 @@ app.post("/login", async (req, res) => {
 // add new task
 app.post("/add-task", authenticateToken, async (req, res) => {
   const { title, details } = req.body;
-  const { user } = req;
-
+  const { user } = req.user;
+console.log("user id ===>",user._id)
   if (!title) {
     return res.status(400).json({ error: true, message: "Title is required" });
   }
@@ -151,14 +155,14 @@ app.post("/add-task", authenticateToken, async (req, res) => {
 });
 
 // edit exist task
-app.put("/edit-task", authenticateToken, async (req, res) => {
-  console.log(req.params.taskId);
-  console.log(req.body);
+app.put("/edit-task/:taskId", authenticateToken, async (req, res) => {
+  console.log("task id ========> ",req.params.taskId);
+  console.log("task body ========> ",req.body);
   console.log("================");
   const taskId = req.params.taskId;
   const { title, details, isPinned } = req.body;
   const { user } = req.user;
-
+console.log("user id ====>",user._id);
   if (!title && !details) {
     return res
       .status(400)
@@ -166,8 +170,9 @@ app.put("/edit-task", authenticateToken, async (req, res) => {
   }
 
   try {
-    const task = await Task.findOne({ _id: taskId, userId: user._id });
 
+    const task = await Task.findOne({ _id: taskId},{ userId: user._id });
+    console.log(task);
     if (!task) {
       return res.status(404).json({ error: true, message: "Task not found" });
     }
@@ -178,11 +183,8 @@ app.put("/edit-task", authenticateToken, async (req, res) => {
     await task.save();
 
     return res.json({ error: false, task, message: "Task Edited Successful" });
+
   } catch (error) {
-    if (error.name === "CastError") {
-      return res.status(400).json({ error: true, message: "Invalid task ID" });
-    }
-    // Handle other specific errors here
     return res.status(500).json({
       error: true,
       message: `Internal Server Error: ${error.message}`,
