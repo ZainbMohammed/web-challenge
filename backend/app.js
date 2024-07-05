@@ -196,18 +196,40 @@ app.get("/tasks", authenticateToken, async (req, res) => {
 
   try {
     const tasks = await Task.find({ userId: user._id }).sort({ isPinned: -1 });
-    
+
     res.json({
       error: false,
       tasks,
       message: "All tasks retrieved successful",
     });
-    
   } catch (error) {
     return res
       .status(500)
       .json({ error: true, message: "Internal server error" });
-  } 
+  }
+});
+
+// delet specific task
+app.delete("/delete-task", authenticateToken, async (req, res) => {
+  const taskId = req.params.taskId;
+  const { user } = req.user;
+
+  try {
+    const task = await Task.findOne({ _id: taskId, userId: user._id });
+
+    if (!task) {
+      return res.status(404).json({ error: true, message: "Task not found" });
+    }
+
+    await Task.deleteOne({_id: taskId, userId: user._id});
+
+    return res 
+      .json({ error: false, message: 'Task deleted successful' });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: true, message: "Internal server error" });
+  }
 });
 app.listen(8000);
 
