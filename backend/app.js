@@ -1,9 +1,13 @@
 require('dotenv').config();
-const User = require('./Models/user.model.js');
+
 const config = require('./config.json');
 const mongoose = require('mongoose');
 
 mongoose.connect(config.connectionString);
+
+const User = require('./Models/user.model.js');
+const Task = require('./Models/task.model');
+
 
 const express = require('express');
 const cors = require('cors');
@@ -71,6 +75,7 @@ app.post('/register', async (req,res) => {
     }
 
 })
+//login
 app.post('/login', async (req,res) => {
     const {email,password} = req.body;
 
@@ -108,6 +113,42 @@ app.post('/login', async (req,res) => {
         })
     }
 });
+
+// add new task
+app.post('/add-task',authenticateToken,async (req,res) => {
+
+    const {title, details} = req.body;
+    const {user} = req;
+
+    if (!title){
+        return res.status(400).json({error:true, message: 'Title is required'});
+    }
+
+    if (!details){
+        return res.status(400).json({error:true, message: 'Title is required'});
+    }
+
+    try{
+        const task = new Task({
+            title,
+            details,
+            userId: user._id,
+        });
+
+        await task.save();
+
+        return res.json({
+            error:false,
+            task,
+            message: 'task added successful'
+        });
+    }catch(error){
+        return res.status(500).json({
+            error:true,
+            message: `Internal server error ${error.message}`,
+        });
+    }
+})
 app.listen(8000);
 
 module.exports = app;
