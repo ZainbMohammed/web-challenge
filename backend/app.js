@@ -156,13 +156,11 @@ console.log("user id ===>",user._id)
 
 // edit exist task
 app.put("/edit-task/:taskId", authenticateToken, async (req, res) => {
-  console.log("task id ========> ",req.params.taskId);
-  console.log("task body ========> ",req.body);
-  console.log("================");
+
   const taskId = req.params.taskId;
   const { title, details, isPinned } = req.body;
   const { user } = req.user;
-console.log("user id ====>",user._id);
+
   if (!title && !details) {
     return res
       .status(400)
@@ -172,7 +170,7 @@ console.log("user id ====>",user._id);
   try {
 
     const task = await Task.findOne({ _id: taskId},{ userId: user._id });
-    console.log(task);
+
     if (!task) {
       return res.status(404).json({ error: true, message: "Task not found" });
     }
@@ -212,7 +210,7 @@ app.get("/tasks", authenticateToken, async (req, res) => {
 });
 
 // delet specific task
-app.delete("/delete-task", authenticateToken, async (req, res) => {
+app.delete("/delete-task/:taskId", authenticateToken, async (req, res) => {
   const taskId = req.params.taskId;
   const { user } = req.user;
 
