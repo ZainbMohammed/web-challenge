@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 // import Navbar from '../../components/Navbar/navbar';
-import {Link} from 'react-router-dom';
+import {Link,useNavigate} from 'react-router-dom';
 import PasswordInput from '../../components/Input/passwordInput';
 import { validateEmail } from '../../utils/helper';
+
+import axiosInstance from '../../utils/axiosInstance'
 import Logo from '../../assets/loogo.png'
 
 const Login = () => {
@@ -11,6 +13,8 @@ const Login = () => {
     const [passsword, setPassword] = useState("");
     const [error, setError] = useState(null);
 
+
+const navigate = useNavigate();
 
     const loginHandler = async (e) => {
         e.preventDefault();
@@ -29,6 +33,27 @@ const Login = () => {
         }
 
         // api call
+        try{
+
+            // Handle successful login
+            const response = await axiosInstance.post('/users/login',{
+                email: email,
+                password: passsword
+            });
+            if(response.data && response.data.accessToken){
+                localStorage.setItem('token',response.data.accessToken);
+                navigate('/dashboard');
+            }
+        }catch(error){
+
+            // Handle failed login
+            if(error.response && error.response.data && error.response.data.message){
+                setError(error.response.data.message);
+            }else {
+                setError('هناك مشكبة حدثت, حاول مجدداً من فضلك');
+            }
+
+        }
     };   
 
   return <>

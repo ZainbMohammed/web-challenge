@@ -95,7 +95,7 @@ const login = async (req, res) => {
    
   };
   // get specific user 
-const getUser = async (req, res) => {
+const getUserInfo = async (req, res) => {
   
     const {user} = req.user;
   
@@ -119,5 +119,5 @@ const getUser = async (req, res) => {
   module.exports = {
     register,
     login,
-    getUser
+    getUserInfo,
 }

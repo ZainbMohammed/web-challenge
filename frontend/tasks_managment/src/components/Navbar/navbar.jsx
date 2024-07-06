@@ -4,12 +4,13 @@ import Logo from '../../assets/loogo.png'
 import { useNavigate } from 'react-router-dom'
 import Searchbar from '../SearchBar/searchbar'
 
-const Navbar = () => {
+const Navbar = ({userInfo}) => {
 
   const [serachQuery, setSearchQuery] = useState('')
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
-  const logoutHander = () => {
+  const logoutHandler = () => {
+    localStorage.clear();
     navigate('/login')
   };
   const searchHandler = () => {
@@ -36,8 +37,9 @@ const Navbar = () => {
         searchHandler={searchHandler}
         onClearSearch={onClearSearch}
       
-      />
-      <ProfileInfo onLogout={logoutHander}/>
+      />     
+       <ProfileInfo userInfo={userInfo} onLogout={logoutHandler}/>
+      {/* {userInfo || <ProfileInfo userInfo={userInfo} logoutHandler={logoutHandler} />} */}
     </div>
   )
 };

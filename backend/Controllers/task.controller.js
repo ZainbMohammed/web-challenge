@@ -1,5 +1,3 @@
-const express = require("express");
-
 
 const Task = require("../Models/task.model");
 
@@ -125,7 +123,7 @@ const updateIsPinned = async (req, res) => {
   };
   
   // delet specific task
-const deleteTask = async (req, res) => {
+  const deleteTask = async (req, res) => {
     const taskId = req.params.taskId;
     const { user } = req.user;
   
