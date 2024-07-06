@@ -10,6 +10,7 @@ const Navbar = ({userInfo}) => {
   const navigate = useNavigate();
 
   const logoutHandler = () => {
+    console.log('logout button cliked');
     localStorage.clear();
     navigate('/login')
   };
@@ -39,7 +40,7 @@ const Navbar = ({userInfo}) => {
       
       />     
        <ProfileInfo userInfo={userInfo} onLogout={logoutHandler}/>
-      {/* {userInfo || <ProfileInfo userInfo={userInfo} logoutHandler={logoutHandler} />} */}
+      {/* {userInfo || <ProfileInfo userInfo={userInfo} onLogout={logoutHandler} />} */}
     </div>
   )
 };

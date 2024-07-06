@@ -119,7 +119,7 @@ const Home = () => {
     <div className='container mx-auto'>
       {tasks.length > 0 ? (<div className='grid grid-cols-3 gap-4 mt-8'>
 
-        {tasks.map((item, index) => {
+        {tasks.map((item) => {
 
           return <TaskCard
             key={item._id}
@@ -164,7 +164,7 @@ const Home = () => {
         type={openAddEditModel.type}
         fetchTasks={fetchTasks}
         onClose={onClose}
-        showToastNotify={showToastNotifying}
+        showToastNotifying={showToastNotifying}
       />
     </Modal>
 
