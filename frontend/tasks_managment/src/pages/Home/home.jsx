@@ -5,8 +5,8 @@ import { MdAdd } from 'react-icons/md';
 import Add_EditTask from './add_editTask';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../utils/axiosInstance'
-
+import axiosInstance from '../../utils/axiosInstance';
+import moment from 'moment';
 const Home = () => {
 
   const [openAddEditModel, setOpenAddEditModel] = useState({
@@ -15,10 +15,14 @@ const Home = () => {
     date: null
   });
 
+  const [tasks, setTasks] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
 
   const navigate = useNavigate();
 
+  const editHandller = (taskInfo) => {
+    setOpenAddEditModel({isShown:true,data:taskInfo,type:'edit'})
+  }
   // get user info 
   const getUserInfo = async () => {
     // e.preventDefault();
@@ -42,29 +46,46 @@ const Home = () => {
     }
   };
 
+  // fetch tasks
+  const fetchTasks = async () => {
+    try {
+      const respons = await axiosInstance.get('/tasks');
+      if (respons.data && respons.data.tasks) {
+        setTasks(respons.data.tasks)
+      }
+    } catch (error) {
+      console.log('uncepected error ,please try again');
+    }
+  }
   useEffect(() => {
+    fetchTasks();
     getUserInfo();
-    return () => {};
-  },[])
+    return () => { };
+  }, [])
 
   const onClose = () => {
     setOpenAddEditModel({ isShown: false, type: 'add', date: null })
   }
   return <>
-    <Navbar  userInfo={userInfo}/>
+    <Navbar userInfo={userInfo} />
 
     <div className='container mx-auto'>
       <div className='grid grid-cols-3 gap-4 mt-8'>
 
-        <TaskCard
-          title='مقابلة عمل الساعة 8 صباحاً'
-          date='9 July 2024'
-          details='مقابلة عمل في شركة بوتفاي لوظيفه مبرمج تطبيقات الموبايل باستخدام فلتر'
-          isPinned={true}
-          onEdit={() => { }}
-          onDelete={() => { }}
-          onPined={() => { }}
-        />
+        {tasks.map((item, index) => {
+
+          return <TaskCard
+            key={item._id}
+            title={item.title}
+            date={item.createAt}
+            details={item.details}
+            isPinned={item.isPinned}
+            onEdit={() => { editHandller(item)}}
+            onDelete={() => { }}
+            onPined={() => { }}
+          />
+        })
+        }
 
       </div>
     </div>
@@ -91,6 +112,7 @@ const Home = () => {
         taskDate={openAddEditModel.date}
         type={openAddEditModel.type}
         onClose={onClose}
+        fetchTasks = {fetchTasks}
       />
     </Modal>
   </>

@@ -1,14 +1,40 @@
 import React, { useState } from 'react'
 import {MdClose} from 'react-icons/md'
+import axiosInstance from '../../utils/axiosInstance';
 
-const Add_EditTask = ({taskDate,type,onClose}) => {
+const Add_EditTask = ({taskDate,type,fetchTasks,onClose}) => {
 
-    const [title, setTitle] = useState('');
+    const [title, setTitle] = useState("");
     const [details, setDetails] = useState('');
     const [error, setError] = useState(null);
     // const [title, setTitle] = useState('');
 // add new task 
-const addTask = async () => {}
+const addTask = async () => {
+    try {
+
+        // Handle successful sigunup
+        const response = await axiosInstance.post('/tasks/add-task', {
+            title,
+            details,
+        });
+
+        if (response.data && response.data.task) {
+            fetchTasks();
+            onClose();
+            // return;
+        }
+      
+    } catch (error) {
+
+        // Handle failed signup
+        if (error.response && error.response.data && error.response.data.message) {
+            setError(error.response.data.message);
+        } else {
+            setError('هناك مشكبة حدثت, حاول مجدداً من فضلك');
+        }
+
+    }
+}
 
 // edit task
 const editTask = async () => {}

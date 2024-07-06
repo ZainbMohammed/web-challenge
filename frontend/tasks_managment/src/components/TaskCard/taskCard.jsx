@@ -1,6 +1,9 @@
 import React from 'react'
 import { MdOutlinePushPin } from 'react-icons/md';
 import { MdCreate, MdDelete } from 'react-icons/md'
+import moment from 'moment';
+
+
 const TaskCard = ({
     title,
     date,
@@ -16,7 +19,7 @@ const TaskCard = ({
 
                 <div>
                     <h6 className='text-sm font-medium'>{title}</h6>
-                    <span className='text-xs text-slate-500'>{date}</span>
+                    <span className='text-xs text-slate-500'>{moment(date).format('Do MM YYYY')}</span>
                 </div>
 
                 <MdOutlinePushPin className={`icon-btn ${isPinned} ? text-primary : text-slate-300`} onClick={onPined} />
