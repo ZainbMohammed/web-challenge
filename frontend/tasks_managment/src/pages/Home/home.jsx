@@ -15,11 +15,11 @@ const Home = () => {
     data: null
   });
 
-const [showToastNotify, setShowToastNotify] = useState({
-  isShown:false,
-  type:'add',
-  message:''
-})
+  const [showToastNotify, setShowToastNotify] = useState({
+    isShown: false,
+    type: 'add',
+    message: ''
+  })
 
   const [tasks, setTasks] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
@@ -27,19 +27,24 @@ const [showToastNotify, setShowToastNotify] = useState({
   const navigate = useNavigate();
 
   const editHandller = (taskInfo) => {
-     {/* ========== */}
-    console.log('Task Info to be edited:', taskInfo); // Log the task info
- {/* ========== */}
-    setOpenAddEditModel({isShown:true,data:taskInfo,type:'edit'})
+    
+    setOpenAddEditModel({ isShown: true, data: taskInfo, type: 'edit' })
   }
 
-  const toastCloseHandler = ()=>{
+  const showToastNotifying = (message,type) => {
     setShowToastNotify({
-      isShown:false,
-  // type:'add',
-  message:''
-    })
-  }
+      isShown: true,
+      type : type,
+      message: message
+    });
+  };
+  const toastCloseHandler = () => {
+    setShowToastNotify({
+      isShown: false,
+      // type:'add',
+      message: ''
+    });
+  };
   // get user info 
   const getUserInfo = async () => {
     // e.preventDefault();
@@ -74,6 +79,29 @@ const [showToastNotify, setShowToastNotify] = useState({
       console.log('uncepected error ,please try again');
     }
   }
+  
+  // delete Task
+  const deleteTask = async (data) =>{
+
+    const taskId = data._id; 
+    try {
+      const response = await axiosInstance.delete(`/tasks/delete-task/${taskId}`);
+
+      if (response.data && !response.data.error) {
+          showToastNotifying('تمت حذف المهمة بنجاح','delete');
+          fetchTasks();
+      }
+  } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+
+        console.log('uncepected error ,please try again');
+
+      } 
+      
+  }
+
+  }
+  
   useEffect(() => {
     fetchTasks();
     getUserInfo();
@@ -87,7 +115,7 @@ const [showToastNotify, setShowToastNotify] = useState({
     <Navbar userInfo={userInfo} />
 
     <div className='container mx-auto'>
-      <div className='grid grid-cols-3 gap-4 mt-8'>
+      {tasks.length > 0 ? (<div className='grid grid-cols-3 gap-4 mt-8'>
 
         {tasks.map((item, index) => {
 
@@ -97,14 +125,15 @@ const [showToastNotify, setShowToastNotify] = useState({
             data={item.createAt}
             details={item.details}
             isPinned={item.isPinned}
-            onEdit={() => { editHandller(item)}}
-            onDelete={() => { }}
+            onEdit={() => { editHandller(item) }}
+            onDelete={() => { deleteTask(item)}}
             onPined={() => { }}
-          />
-        })
-        }
 
-      </div>
+          />
+        })} 
+      </div>) : (
+        <EmptyCard />     
+         ) }
     </div>
     <button className='w-10 h-10 flex items-center justify-center rounded-xl bg-primary hover:bg-blue-600 absolute right-10 bottom-10 ' onClick={() => {
       setOpenAddEditModel({ isShown: true, type: 'add', data: null })
@@ -124,22 +153,21 @@ const [showToastNotify, setShowToastNotify] = useState({
       className='w-[35%] max-h-3/4 border rounded-3xl shadow-2xl bg-white px-7 py-10 mx-auto mt-24'
     // className='w-[40%] max-h-3/4 bg-white rounded-md mx-auto mt-14 p-5 overflow-scroll '
     >
-  {/* ========== */}
-  {console.log('Task Data passed to Add_EditTask:', openAddEditModel.data)} {/* Log the task data */}
-  {/* ========== */}
+
       <Add_EditTask
         taskData={openAddEditModel.data}
         type={openAddEditModel.type}
-        fetchTasks = {fetchTasks}
+        fetchTasks={fetchTasks}
         onClose={onClose}
+        showToastNotify={showToastNotifying}
       />
     </Modal>
 
-    <Toast 
-    isShown={showToastNotify.isShown}
-    type={showToastNotify.type}
-    message = {showToastNotify.message}
-    onClose={toastCloseHandler}
+    <Toast
+      isShown={showToastNotify.isShown}
+      type={showToastNotify.type}
+      message={showToastNotify.message}
+      onClose={toastCloseHandler}
     />
   </>
 };

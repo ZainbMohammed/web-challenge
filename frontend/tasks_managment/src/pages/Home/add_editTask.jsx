@@ -1,91 +1,92 @@
 import React, { useState } from 'react'
-import {MdClose} from 'react-icons/md'
+import { MdClose } from 'react-icons/md'
 import axiosInstance from '../../utils/axiosInstance';
 
-const Add_EditTask = ({taskData,type,fetchTasks,onClose}) => {
-     {/* ========== */}
-    console.log('Received taskData in Add_EditTask:', taskData); // Log the received taskData
+const Add_EditTask = ({ taskData, type, fetchTasks, onClose, showToastNotifying }) => {
 
- {/* ========== */}    const [title, setTitle] = useState(taskData?.title || "");
-    const [details, setDetails] = useState(taskData?.details ||"");
+    const [title, setTitle] = useState(taskData?.title || "");
+    const [details, setDetails] = useState(taskData?.details || "");
     const [error, setError] = useState(null);
 
-    
-// add new task 
-const addTask = async () => {
-    try {
 
-        // Handle successful sigunup
-        const response = await axiosInstance.post('/tasks/add-task', {
-            title,
-            details,
-        });
+    // add new task 
+    const addTask = async () => {
+        try {
 
-        if (response.data && response.data.task) {
-            fetchTasks();
-            onClose();
-            // return;
+            // Handle successful sigunup
+            const response = await axiosInstance.post('/tasks/add-task', {
+                title,
+                details,
+            });
+
+            if (response.data && response.data.task) {
+                showToastNotifying('تمت إضافة المهمة بنجاح');
+                fetchTasks();
+                onClose();
+                // return;
+            }
+
+        } catch (error) {
+
+            // Handle failed signup
+            if (error.response && error.response.data && error.response.data.message) {
+                setError(error.response.data.message);
+            } else {
+                setError('هناك مشكبة حدثت, حاول مجدداً من فضلك');
+            }
+
         }
-      
-    } catch (error) {
-
-        // Handle failed signup
-        if (error.response && error.response.data && error.response.data.message) {
-            setError(error.response.data.message);
-        } else {
-            setError('هناك مشكبة حدثت, حاول مجدداً من فضلك');
-        }
-
     }
-}
 
-// edit task
-const editTask = async () => {
-    const taskId = taskData._id;
-    try {
-        const response = await axiosInstance.put(`/tasks/edit-task/${taskId}`, {
-          title,
-          details,
-        });
-  
-        if (response.data && response.data.task) {
-          fetchTasks();
-          onClose();
-        }
-      } catch (error) {
-        if (error.response && error.response.data && error.response.data.message) {
-          setError(error.response.data.message);
-        } else {
-          setError('هناك مشكبة حدثت, حاول مجدداً من فضلك');
-        }
-      }
-}
+    // edit task
+    const editTask = async () => {
+        const taskId = taskData._id;
+        try {
+            const response = await axiosInstance.put(`/tasks/edit-task/${taskId}`, {
+                title,
+                details,
+            });
 
+            if (response.data && response.data.task) {
+                showToastNotifying('تمت تعديل المهمة بنجاح');
+
+                fetchTasks();
+                onClose();
+            }
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.message) {
+                setError(error.response.data.message);
+            } else {
+                setError('هناك مشكبة حدثت, حاول مجدداً من فضلك');
+            }
+        }
+    }
 
     const addTaskHandler = () => {
-        if(!title){
+        if (!title) {
             setError('ادخل عنوان المهمة');
             return;
         }
-        if(!details){
+        if (!details) {
             setError('ادخل تفاصيل المهمة');
             return;
         }
 
         setError('');
 
-        if(type === 'add'){
+        if (type === 'add') {
             addTask()
-        }else{
+        } else {
             editTask()
         }
 
     }
+
     return <>
         <div className='relative'>
             <button className='w-8 h-8 rounded-full flex items-center justify-center absolute -left-4 -top-8 hover:text-slate-950 ' onClick={onClose}>
 
-                <MdClose className='text-xl text-slate-400 self-center'/>
+                <MdClose className='text-xl text-slate-400 self-center' />
             </button>
             <div className='flex flex-col gap-2'>
                 <label className='input-label text-xl font-medium'>عنوان المهمة</label>
@@ -94,7 +95,7 @@ const editTask = async () => {
                     className='text-xs text-slat-950 outline-none mb-3'
                     placeholder='ادخل عنوان مهمتك'
                     value={title}
-                    onChange={ ( {target}) => setTitle(target.value)}
+                    onChange={({ target }) => setTitle(target.value)}
 
                 />
             </div>
@@ -106,13 +107,13 @@ const editTask = async () => {
                     placeholder='ادخل تفاصيل مهمتك'
                     rows={4}
                     value={details}
-                    onChange={ ( {target}) => setDetails(target.value)}
+                    onChange={({ target }) => setDetails(target.value)}
 
                 />
             </div>
             {error && <p className='text-red-500 text-xs pt-4'>{error}</p>}
             <button className='btn-primary font-medium mt-5 p-3' onClick={addTaskHandler}>
-            {type === 'add' ? 'إضافة' : 'تعديل'}
+                {type === 'add' ? 'إضافة' : 'تعديل'}
             </button>
         </div>
     </>
