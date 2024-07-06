@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 // import Navbar from '../../components/Navbar/navbar';
 import PasswordInput from '../../components/Input/passwordInput';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { validateEmail } from '../../utils/helper';
 import Logo from '../../assets/loogo.png'
+import axiosInstance from '../../utils/axiosInstance';
+// import {useNavigate} from 'react-router-dom';
 
 const Signup = () => {
 
@@ -11,6 +13,8 @@ const Signup = () => {
     const [email, setEmail] = useState("");
     const [passsword, setPassword] = useState("");
     const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
 
 
     const signupHandler = async (e) => {
@@ -33,6 +37,33 @@ const Signup = () => {
         setError('');
 
         // signup api call
+        try {
+
+            // Handle successful sigunup
+            const response = await axiosInstance.post('/users/register', {
+                fullName: name,
+                email: email,
+                password: passsword
+            });
+
+            if (response.data && response.data.error) {
+                setError(response.data.message);
+                return;
+            }
+            if(response.data && response.data.accessToken){
+                localStorage.setItem('token',response.data.accessToken);
+                navigate('/dashboard');
+            }
+        } catch (error) {
+
+            // Handle failed signup
+            if (error.response && error.response.data && error.response.data.message) {
+                setError(error.response.data.message);
+            } else {
+                setError('هناك مشكبة حدثت, حاول مجدداً من فضلك');
+            }
+
+        }
 
     }
     return <>
