@@ -24,4 +24,7 @@ router.route('/')
 router.route('/delete-task/:taskId')
       .delete(authenticateToken, taskControllers.deleteTask);
 
+// search in tasks
+router.route('/search-task')
+      .get(authenticateToken, taskControllers.searchTasks);
 module.exports = router;
