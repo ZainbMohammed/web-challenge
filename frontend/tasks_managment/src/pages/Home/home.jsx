@@ -6,14 +6,20 @@ import Add_EditTask from './add_editTask';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
-import moment from 'moment';
+import Toast from '../../components/ToastNotify/toast';
 const Home = () => {
 
   const [openAddEditModel, setOpenAddEditModel] = useState({
     isShown: false,
     type: 'add',
-    date: null
+    data: null
   });
+
+const [showToastNotify, setShowToastNotify] = useState({
+  isShown:false,
+  type:'add',
+  message:''
+})
 
   const [tasks, setTasks] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
@@ -21,7 +27,18 @@ const Home = () => {
   const navigate = useNavigate();
 
   const editHandller = (taskInfo) => {
+     {/* ========== */}
+    console.log('Task Info to be edited:', taskInfo); // Log the task info
+ {/* ========== */}
     setOpenAddEditModel({isShown:true,data:taskInfo,type:'edit'})
+  }
+
+  const toastCloseHandler = ()=>{
+    setShowToastNotify({
+      isShown:false,
+  // type:'add',
+  message:''
+    })
   }
   // get user info 
   const getUserInfo = async () => {
@@ -64,7 +81,7 @@ const Home = () => {
   }, [])
 
   const onClose = () => {
-    setOpenAddEditModel({ isShown: false, type: 'add', date: null })
+    setOpenAddEditModel({ isShown: false, type: 'add', data: null })
   }
   return <>
     <Navbar userInfo={userInfo} />
@@ -77,7 +94,7 @@ const Home = () => {
           return <TaskCard
             key={item._id}
             title={item.title}
-            date={item.createAt}
+            data={item.createAt}
             details={item.details}
             isPinned={item.isPinned}
             onEdit={() => { editHandller(item)}}
@@ -90,7 +107,7 @@ const Home = () => {
       </div>
     </div>
     <button className='w-10 h-10 flex items-center justify-center rounded-xl bg-primary hover:bg-blue-600 absolute right-10 bottom-10 ' onClick={() => {
-      setOpenAddEditModel({ isShown: true, type: 'add', date: null })
+      setOpenAddEditModel({ isShown: true, type: 'add', data: null })
     }}>
       <MdAdd className='text-[32px] text-white font-thin' />
     </button>
@@ -107,14 +124,23 @@ const Home = () => {
       className='w-[35%] max-h-3/4 border rounded-3xl shadow-2xl bg-white px-7 py-10 mx-auto mt-24'
     // className='w-[40%] max-h-3/4 bg-white rounded-md mx-auto mt-14 p-5 overflow-scroll '
     >
-
+  {/* ========== */}
+  {console.log('Task Data passed to Add_EditTask:', openAddEditModel.data)} {/* Log the task data */}
+  {/* ========== */}
       <Add_EditTask
-        taskDate={openAddEditModel.date}
+        taskData={openAddEditModel.data}
         type={openAddEditModel.type}
-        onClose={onClose}
         fetchTasks = {fetchTasks}
+        onClose={onClose}
       />
     </Modal>
+
+    <Toast 
+    isShown={showToastNotify.isShown}
+    type={showToastNotify.type}
+    message = {showToastNotify.message}
+    onClose={toastCloseHandler}
+    />
   </>
 };
 

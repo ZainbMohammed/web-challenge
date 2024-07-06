@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import {MdClose} from 'react-icons/md'
 import axiosInstance from '../../utils/axiosInstance';
 
-const Add_EditTask = ({taskDate,type,fetchTasks,onClose}) => {
+const Add_EditTask = ({taskData,type,fetchTasks,onClose}) => {
+     {/* ========== */}
+    console.log('Received taskData in Add_EditTask:', taskData); // Log the received taskData
 
-    const [title, setTitle] = useState("");
-    const [details, setDetails] = useState('');
+ {/* ========== */}    const [title, setTitle] = useState(taskData?.title || "");
+    const [details, setDetails] = useState(taskData?.details ||"");
     const [error, setError] = useState(null);
-    // const [title, setTitle] = useState('');
+
+    
 // add new task 
 const addTask = async () => {
     try {
@@ -37,7 +40,26 @@ const addTask = async () => {
 }
 
 // edit task
-const editTask = async () => {}
+const editTask = async () => {
+    const taskId = taskData._id;
+    try {
+        const response = await axiosInstance.put(`/tasks/edit-task/${taskId}`, {
+          title,
+          details,
+        });
+  
+        if (response.data && response.data.task) {
+          fetchTasks();
+          onClose();
+        }
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.message) {
+          setError(error.response.data.message);
+        } else {
+          setError('هناك مشكبة حدثت, حاول مجدداً من فضلك');
+        }
+      }
+}
 
 
     const addTaskHandler = () => {
@@ -90,7 +112,7 @@ const editTask = async () => {}
             </div>
             {error && <p className='text-red-500 text-xs pt-4'>{error}</p>}
             <button className='btn-primary font-medium mt-5 p-3' onClick={addTaskHandler}>
-                إضافة
+            {type === 'add' ? 'إضافة' : 'تعديل'}
             </button>
         </div>
     </>
