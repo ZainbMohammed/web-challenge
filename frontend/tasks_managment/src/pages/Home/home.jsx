@@ -8,20 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
 import Toast from '../../components/ToastNotify/toast';
 import EmptyCard from '../../components/EmptyCard/emptyCard';
-import AddTaskImage from '../../assets/add-task3.png';
+import AddTaskImage from '../../assets/add-task.png';
+import NoSearchResult from '../../assets/obs.png';
+import Slogan from '../Login/slogan';
 const Home = () => {
-
-  const slogan = `
-الحل المثالي لحفظ و تنظيم مهامك اليومية،
-بحيث يمكنك التركيز على إنجازاتك بكل ثقة و أمان،
-و ضمان الحفاظ على كل تفاصيل مهامك في مكان واحد.
-
-أترك إدارة مهامك علينا، و عليك الأبداع.
-'هام منظمة إنجاز أكثر'.
-
-\n \n \n
-هيا، ماذا تنتظر!
-`;
 
   const [openAddEditModel, setOpenAddEditModel] = useState({
     isShown: false,
@@ -35,20 +25,22 @@ const Home = () => {
     message: ''
   })
 
+
   const [tasks, setTasks] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
+  const [isSearch ,setIsSearch] = useState(false);
 
   const navigate = useNavigate();
 
   const editHandller = (taskInfo) => {
-    
+
     setOpenAddEditModel({ isShown: true, data: taskInfo, type: 'edit' })
   }
 
-  const showToastNotifying = (message,type) => {
+  const showToastNotifying = (message, type) => {
     setShowToastNotify({
       isShown: true,
-      type : type,
+      type: type,
       message: message
     });
   };
@@ -93,29 +85,54 @@ const Home = () => {
       console.log('uncepected error ,please try again');
     }
   }
-  
-  // delete Task
-  const deleteTask = async (data) =>{
 
-    const taskId = data._id; 
+  // delete Task
+  const deleteTask = async (data) => {
+
+    const taskId = data._id;
     try {
       const response = await axiosInstance.delete(`/tasks/delete-task/${taskId}`);
 
       if (response.data && !response.data.error) {
-          showToastNotifying('تمت حذف المهمة بنجاح','delete');
-          fetchTasks();
+        showToastNotifying('تمت حذف المهمة بنجاح', 'delete');
+        fetchTasks();
       }
-  } catch (error) {
+    } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
 
         console.log('uncepected error ,please try again');
 
-      } 
-      
-  }
+      }
+
+    }
 
   }
-  
+
+  // search for a task
+  const onSearchTask = async(query) => {
+
+    try{
+
+      const response = await axiosInstance.get('/tasks/search-task',{
+        params : {query},
+      });
+      if(response.data && response.data.tasks){
+        setIsSearch(true);
+        setTasks(response.data.tasks)
+      }
+
+    }catch(error){
+
+      console.log(error);
+    }
+  };
+
+  const clearSearchHandler = () => {
+
+    setIsSearch(false);
+    fetchTasks();
+  }
+
   useEffect(() => {
     fetchTasks();
     getUserInfo();
@@ -126,7 +143,11 @@ const Home = () => {
     setOpenAddEditModel({ isShown: false, type: 'add', data: null })
   }
   return <>
-    <Navbar userInfo={userInfo} />
+    <Navbar 
+      userInfo={userInfo} 
+      onSearchTask={onSearchTask}
+      clearSearchHandler = {clearSearchHandler}
+    />
 
     <div className='container mx-auto'>
       {tasks.length > 0 ? (<div className='grid grid-cols-3 gap-4 mt-8'>
@@ -140,14 +161,12 @@ const Home = () => {
             details={item.details}
             isPinned={item.isPinned}
             onEdit={() => { editHandller(item) }}
-            onDelete={() => { deleteTask(item)}}
+            onDelete={() => { deleteTask(item) }}
             onPined={() => { }}
 
           />
-        })} 
-      </div>) : (
-        <EmptyCard imageSRC={AddTaskImage}/>     
-         ) }
+        })}
+      </div>) : isSearch ? (<EmptyCard imageSRC={NoSearchResult} >! لا توجد مهام مطابقة لما تبحث' </EmptyCard>) : (<EmptyCard imageSRC={AddTaskImage} ><Slogan/> </EmptyCard>      )}
     </div>
     <button className='w-10 h-10 flex items-center justify-center rounded-xl bg-primary hover:bg-blue-600 absolute right-10 bottom-10 ' onClick={() => {
       setOpenAddEditModel({ isShown: true, type: 'add', data: null })

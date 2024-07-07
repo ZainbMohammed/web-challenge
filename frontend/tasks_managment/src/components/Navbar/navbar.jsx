@@ -4,7 +4,7 @@ import Logo from '../../assets/loogo.png'
 import { useNavigate } from 'react-router-dom'
 import Searchbar from '../SearchBar/searchbar'
 
-const Navbar = ({userInfo}) => {
+const Navbar = ({ userInfo, onSearchTask, clearSearchHandler }) => {
 
   const [serachQuery, setSearchQuery] = useState('')
   const navigate = useNavigate();
@@ -15,11 +15,16 @@ const Navbar = ({userInfo}) => {
     navigate('/login')
   };
   const searchHandler = () => {
+    if (serachQuery) {
+      onSearchTask(serachQuery)
+
+    }
 
   };
 
   const onClearSearch = () => {
     setSearchQuery('');
+    clearSearchHandler(); 
   };
 
   return (
@@ -30,16 +35,16 @@ const Navbar = ({userInfo}) => {
       </div>
       {/* <h2 className='text-xl font-medium text-black px-2  py-2'>إدارة المهام</h2> */}
 
-      <Searchbar 
+      <Searchbar
         value={serachQuery}
-        onChange={ ( {target} ) => {
+        onChange={({ target }) => {
           setSearchQuery(target.value)
         }}
         searchHandler={searchHandler}
         onClearSearch={onClearSearch}
-      
-      />     
-       <ProfileInfo userInfo={userInfo} onLogout={logoutHandler}/>
+
+      />
+      <ProfileInfo userInfo={userInfo} onLogout={logoutHandler} />
       {/* {userInfo || <ProfileInfo userInfo={userInfo} onLogout={logoutHandler} />} */}
     </div>
   )
