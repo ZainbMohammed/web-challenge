@@ -4,19 +4,19 @@ const taskControllers = require("../Controllers/task.controller");
 const authenticateToken = require("../utilities");
 
 
-// add new task
+// route for add new task
 router.route('/add-task')
       .post(authenticateToken, taskControllers.addTask);
 
-// edit exist task
+// route for edit exist task
 router.route('/edit-task/:taskId')
       .put(authenticateToken, taskControllers.editTask);
 
-// update is isPinned value
-router.route('/update-isPinned-task/:taskId')
-      .put(authenticateToken, taskControllers.updateIsPinned);
+// route for update is isComplete value
+router.route('/update-isComplete-task/:taskId')
+      .put(authenticateToken, taskControllers.updateIsComplete);
 
-//show all tasks created by loginned user
+// route for show all tasks created by user
 router.route('/')
       .get(authenticateToken, taskControllers.displayTasks);
 

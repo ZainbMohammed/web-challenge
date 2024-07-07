@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const taskSchema = new mongoose.Schema({
+
     title: {
         type : String,
         require : true
@@ -9,7 +10,7 @@ const taskSchema = new mongoose.Schema({
         type : String,
         require : true,
     },
-    isPinned: {
+    isComplete: {
         type : Boolean,
         default : false,
     },
