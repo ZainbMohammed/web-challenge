@@ -8,8 +8,20 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
 import Toast from '../../components/ToastNotify/toast';
 import EmptyCard from '../../components/EmptyCard/emptyCard';
-import AddTaskImage from '../../assets/loogo.png';
+import AddTaskImage from '../../assets/add-task3.png';
 const Home = () => {
+
+  const slogan = `
+الحل المثالي لحفظ و تنظيم مهامك اليومية،
+بحيث يمكنك التركيز على إنجازاتك بكل ثقة و أمان،
+و ضمان الحفاظ على كل تفاصيل مهامك في مكان واحد.
+
+أترك إدارة مهامك علينا، و عليك الأبداع.
+'هام منظمة إنجاز أكثر'.
+
+\n \n \n
+هيا، ماذا تنتظر!
+`;
 
   const [openAddEditModel, setOpenAddEditModel] = useState({
     isShown: false,
@@ -134,10 +146,7 @@ const Home = () => {
           />
         })} 
       </div>) : (
-        <EmptyCard imageSRC={AddTaskImage} message={`أترك إدارة مهامك علينا ، و عليك الأبداع
-'مهام منظمة إنجاز أكثر'
-
-هيا ماذا تنتظر !`}/>     
+        <EmptyCard imageSRC={AddTaskImage}/>     
          ) }
     </div>
     <button className='w-10 h-10 flex items-center justify-center rounded-xl bg-primary hover:bg-blue-600 absolute right-10 bottom-10 ' onClick={() => {
