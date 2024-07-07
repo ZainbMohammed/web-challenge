@@ -28,7 +28,7 @@ const Home = () => {
 
   const [tasks, setTasks] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
-  const [isSearch ,setIsSearch] = useState(false);
+  const [isSearch, setIsSearch] = useState(false);
 
   const navigate = useNavigate();
 
@@ -87,9 +87,9 @@ const Home = () => {
   }
 
   // delete Task
-  const deleteTask = async (data) => {
+  const deleteTask = async (taskInfo) => {
 
-    const taskId = data._id;
+    const taskId = taskInfo._id;
     try {
       const response = await axiosInstance.delete(`/tasks/delete-task/${taskId}`);
 
@@ -103,30 +103,45 @@ const Home = () => {
         console.log('uncepected error ,please try again');
 
       }
-
     }
-
   }
 
   // search for a task
-  const onSearchTask = async(query) => {
+  const onSearchTask = async (query) => {
 
-    try{
+    try {
 
-      const response = await axiosInstance.get('/tasks/search-task',{
-        params : {query},
+      const response = await axiosInstance.get('/tasks/search-task', {
+        params: { query },
       });
-      if(response.data && response.data.tasks){
+      if (response.data && response.data.tasks) {
         setIsSearch(true);
         setTasks(response.data.tasks)
       }
 
-    }catch(error){
+    } catch (error) {
 
       console.log(error);
     }
   };
 
+  // update isPinned
+  const updateIsPinned = async (taskInfo) =>{
+
+    const taskId = taskInfo._id;
+        try {
+            const response = await axiosInstance.put(`/tasks/update-isPinned-task/${taskId}`, {
+               isPinned: !taskInfo.isPinned,
+            });
+
+            if (response.data && response.data.task) {
+                showToastNotifying('تمت تعديل المهمة بنجاح');
+                fetchTasks();
+            }
+        } catch (error) {
+            console.log('error');
+        }
+  }
   const clearSearchHandler = () => {
 
     setIsSearch(false);
@@ -143,10 +158,10 @@ const Home = () => {
     setOpenAddEditModel({ isShown: false, type: 'add', data: null })
   }
   return <>
-    <Navbar 
-      userInfo={userInfo} 
+    <Navbar
+      userInfo={userInfo}
       onSearchTask={onSearchTask}
-      clearSearchHandler = {clearSearchHandler}
+      clearSearchHandler={clearSearchHandler}
     />
 
     <div className='container mx-auto'>
@@ -162,11 +177,15 @@ const Home = () => {
             isPinned={item.isPinned}
             onEdit={() => { editHandller(item) }}
             onDelete={() => { deleteTask(item) }}
-            onPined={() => { }}
+            onPinned={() => { updateIsPinned(item)}}
 
           />
         })}
-      </div>) : isSearch ? (<EmptyCard imageSRC={NoSearchResult} >لا توجد مهام مطابقة لما تبحث</EmptyCard>) : (<EmptyCard imageSRC={AddTaskImage} ><Slogan/> </EmptyCard>      )}
+      </div>) :
+        isSearch
+          ? (<EmptyCard imageSRC={NoSearchResult} >لا توجد مهام مطابقة لما تبحث</EmptyCard>)
+          : (<EmptyCard imageSRC={AddTaskImage} ><Slogan /></EmptyCard>)
+      }
     </div>
     <button className='w-10 h-10 flex items-center justify-center rounded-xl bg-primary hover:bg-blue-600 absolute right-10 bottom-10 ' onClick={() => {
       setOpenAddEditModel({ isShown: true, type: 'add', data: null })
@@ -188,7 +207,7 @@ const Home = () => {
     >
 
       <Add_EditTask
-        taskData={openAddEditModel.data}
+        taskInfo={openAddEditModel.data}
         type={openAddEditModel.type}
         fetchTasks={fetchTasks}
         onClose={onClose}

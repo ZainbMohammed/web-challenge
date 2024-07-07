@@ -11,18 +11,19 @@ const TaskCard = ({
     isPinned,
     onEdit,
     onDelete,
-    onPined
+    onPinned
 }) => {
+
     return <>
         <div className='border w-96 rounded-lg p-4 bg-white hover:shadow-xl  hover:scale-110 transition-all ease-in-out duration-200'>
             <div className='flex items-center justify-between'>
 
                 <div>
-                    <h6 className='text-sm font-medium'>{title}</h6>
+                    <h6 className={`text-sm font-medium ${isPinned ? 'line-through' : 'no-underline'}`} >{title}</h6>
                     <span className='text-xs text-slate-500'>{moment(date).format('Do MM YYYY')}</span>
                 </div>
 
-                <MdOutlinePushPin className={`icon-btn ${isPinned} ? text-primary : text-slate-300`} onClick={onPined} />
+                <MdOutlinePushPin className={`icon-btn ${isPinned ? 'text-primary' : 'text-slate-300'}`} onClick={onPinned} />
             </div>
             <p className='text-xs text-slate-600 mt-2'>{details?.slice(0, 60)}</p>
 

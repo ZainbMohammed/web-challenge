@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { MdClose } from 'react-icons/md'
 import axiosInstance from '../../utils/axiosInstance';
 
-const Add_EditTask = ({ taskData, type, fetchTasks, onClose, showToastNotifying }) => {
+const Add_EditTask = ({ taskInfo, type, fetchTasks, onClose, showToastNotifying }) => {
 
-    const [title, setTitle] = useState(taskData?.title || "");
-    const [details, setDetails] = useState(taskData?.details || "");
+    const [title, setTitle] = useState(taskInfo?.title || "");
+    const [details, setDetails] = useState(taskInfo?.details || "");
     const [error, setError] = useState(null);
 
 
@@ -40,7 +40,7 @@ const Add_EditTask = ({ taskData, type, fetchTasks, onClose, showToastNotifying 
 
     // edit task
     const editTask = async () => {
-        const taskId = taskData._id;
+        const taskId = taskInfo._id;
         try {
             const response = await axiosInstance.put(`/tasks/edit-task/${taskId}`, {
                 title,
