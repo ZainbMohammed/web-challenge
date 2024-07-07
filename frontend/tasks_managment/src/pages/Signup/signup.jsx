@@ -50,8 +50,8 @@ const Signup = () => {
                 setError(response.data.message);
                 return;
             }
-            if(response.data && response.data.accessToken){
-                localStorage.setItem('token',response.data.accessToken);
+            if (response.data && response.data.accessToken) {
+                localStorage.setItem('token', response.data.accessToken);
                 navigate('/dashboard');
             }
         } catch (error) {
@@ -67,20 +67,18 @@ const Signup = () => {
 
     }
     return <>
-        {/* <Navbar /> */}
-
-        <div className='flex items-center justify-center mt-12'>
-            <div className='w-96 border rounded-3xl shadow-2xl bg-white px-7 py-10'>
-                <div className='flex justify-center items-center mb-6'>
-                    <img className='w-28' src={Logo}></img>
+        <div className='flex items-center justify-center mt-6'>
+            <div className='w-96 border rounded-3xl shadow-2xl bg-white px-7'>
+                <div className='flex justify-center items-center'>
+                    <img className='w-48' src={Logo}></img>
                 </div>
                 <form onSubmit={signupHandler}>
-                    <h4 className='text-2xl mb-7 text-center'>إنشاء حساب</h4>
+                    <h4 className='text-2xl mb-6 text-center'>إنشاء حساب</h4>
 
                     <input
                         type='text'
                         placeholder='اسم المستخدم'
-                        className='input-box'
+                        className='input-box py-3 shadow-inner'
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
@@ -88,7 +86,7 @@ const Signup = () => {
                     <input
                         type='text'
                         placeholder='الإيميل'
-                        className='input-box'
+                        className='input-box shadow-inner'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
@@ -102,7 +100,7 @@ const Signup = () => {
 
                     <button type='submit' className='btn-primary'>إنشاء حساب</button>
 
-                    <p className='text-sm text-center mt-2'>لديك حساب بالفعل؟{' '}
+                    <p className='text-sm text-center mt-2 mb-4'>لديك حساب بالفعل؟{' '}
                         <Link to='/login' className='font-medium text-primary underline'>تسجيل الدخول</Link>
                     </p>
                 </form>

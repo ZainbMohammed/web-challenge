@@ -33,7 +33,6 @@ const Navbar = ({ userInfo, onSearchTask, clearSearchHandler }) => {
         <img className='w-20' src={Logo}></img>
         <h2 className='text-xl font-medium text-black px-2  py-2'>إدارة المهام</h2>
       </div>
-      {/* <h2 className='text-xl font-medium text-black px-2  py-2'>إدارة المهام</h2> */}
 
       <Searchbar
         value={serachQuery}

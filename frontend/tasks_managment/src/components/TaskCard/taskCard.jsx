@@ -14,7 +14,7 @@ const TaskCard = ({
     onPined
 }) => {
     return <>
-        <div className='border rounded p-4 bg-white hover:shadow-xl transition-all ease-in-out'>
+        <div className='border w-96 rounded-lg p-4 bg-white hover:shadow-xl  hover:scale-110 transition-all ease-in-out duration-200'>
             <div className='flex items-center justify-between'>
 
                 <div>

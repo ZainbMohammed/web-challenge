@@ -166,7 +166,7 @@ const Home = () => {
 
           />
         })}
-      </div>) : isSearch ? (<EmptyCard imageSRC={NoSearchResult} >! لا توجد مهام مطابقة لما تبحث' </EmptyCard>) : (<EmptyCard imageSRC={AddTaskImage} ><Slogan/> </EmptyCard>      )}
+      </div>) : isSearch ? (<EmptyCard imageSRC={NoSearchResult} >لا توجد مهام مطابقة لما تبحث</EmptyCard>) : (<EmptyCard imageSRC={AddTaskImage} ><Slogan/> </EmptyCard>      )}
     </div>
     <button className='w-10 h-10 flex items-center justify-center rounded-xl bg-primary hover:bg-blue-600 absolute right-10 bottom-10 ' onClick={() => {
       setOpenAddEditModel({ isShown: true, type: 'add', data: null })
