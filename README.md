@@ -1,9 +1,4 @@
-<p align="center"><img src="https://your-project-logo-url.png" width="400" alt="Project Logo"></p>
-<p align="center">
-<!-- Add badges here if applicable, like build status, version, etc. -->
-</p>
 Web Developer Challenge Zainab
-Welcome to the Tasks Management Web Application developed by Zainab. This project aims to provide a streamlined solution for managing tasks efficiently.
 
 Live Link / Demo Link
 Add a working link to the live demo or hosted application if available.
@@ -22,7 +17,8 @@ About the Project
 The Tasks Management Web Application is designed to streamline task management processes. Users can create, update, prioritize, and track tasks efficiently through an intuitive interface.
 
 Screenshots
-<!-- Add screenshots or GIFs showcasing your project's UI and functionality -->
+Add screenshots or GIFs showcasing your project's UI and functionality.
+
 Technologies Used
 Frontend: React.js, Tailwind CSS
 Backend: Node.js, Express.js, MongoDB
