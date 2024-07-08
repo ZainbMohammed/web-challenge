@@ -1,6 +1,6 @@
 # Task Management Web Application
 
-![Project Logo](./frontend//tasks_managment/src/assets/loogo.png)
+![Project Logo](./frontend//tasks_managment/src/assets/readme-images/loogoo.jpg)
 
 ## Live Link / Demo Link
 
