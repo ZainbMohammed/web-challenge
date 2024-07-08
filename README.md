@@ -1,10 +1,10 @@
-# Web Developer Challenge Zainab
+# Task Management Web Application
 
 ![Project Logo](https://your-project-logo-url.png)
 
 ## Live Link / Demo Link
 
-Add a working link to the live demo or hosted application if available.
+[live demo or hosted application ].
 
 ## Table of Contents
 
@@ -24,14 +24,14 @@ The Tasks Management Web Application is designed to streamline task management p
 
 ## Screenshots
 
-Add screenshots or GIFs showcasing your project's UI and functionality.
+
 
 ## Technologies Used
 
 - **Frontend**: React.js, Tailwind CSS
 - **Backend**: Node.js, Express.js, MongoDB
 - **Authentication**: JSON Web Tokens (JWT)
-- **Deployment**: Heroku, Netlify
+- **Deployment**: Netlify
 
 ## Setup / Installation
 
@@ -61,12 +61,10 @@ To run this project locally, follow these steps:
    Create a `.env` file in the `backend` directory with the following variables:
 
    ```plaintext
-   PORT=5000
+   PORT=8000
    MONGODB_URI=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret
    ```
-
-   Replace `your_mongodb_connection_string` with your MongoDB connection string and `your_jwt_secret` with a secure JWT secret key.
 
 4. **Start the backend server:**
 
@@ -84,7 +82,7 @@ To run this project locally, follow these steps:
 
 6. **Access the application:**
 
-   Open your web browser and go to `http://localhost:3000` to view the application.
+   Open your web browser and go to `http://localhost:8000` to view the application.
 
 ## Features
 
@@ -94,16 +92,11 @@ To run this project locally, follow these steps:
 
 ## Contributing
 
-Thank you for considering contributing to this project! Please review the [Contribution Guidelines](CONTRIBUTING.md) before submitting a pull request.
-
-## Code of Conduct
-
-Please read and adhere to our [Code of Conduct](CODE_OF_CONDUCT.md) to foster an inclusive and respectful community.
+Thank you for considering contributing to this project! 
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability, please report it via email to your-email@example.com. All security vulnerabilities will be promptly addressed.
-
+If you discover a security vulnerability or any bug, please report it via email to zain.mohh@gmail.com. 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is self-developement for learning
