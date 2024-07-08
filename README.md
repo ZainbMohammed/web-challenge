@@ -92,7 +92,7 @@ To run this project locally, follow these steps:
 
 ## Contributing
 
-Thank you for considering contributing to this project! 
+Thank Rukn development team for considering contributing to this project! 
 
 ## Security Vulnerabilities
 
