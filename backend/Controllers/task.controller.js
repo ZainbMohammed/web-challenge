@@ -12,10 +12,6 @@ const addTask = async (req, res) => {
     return res.status(400).json({ error: true, message: "Title is required" });
   }
 
-  if (!details) {
-    return res.status(400).json({ error: true, message: "Title is required" });
-  }
-
   try {
     // create object from Task model to add it
     const task = new Task({

@@ -181,7 +181,7 @@ const Home = () => {
         clearSearchHandler={clearSearchHandler}
       />
 
-      <div className='container mx-auto'>
+      <div className='container mx-auto min-h-screen'>
         {tasks.length > 0 ? (<div className='grid grid-cols-3 gap-4 mt-8'>
 
           {tasks.map((item) => {

@@ -69,10 +69,6 @@ const Add_EditTask = ({ taskInfo, type, fetchTasks, onClose, showToastNotifying 
             setError('ادخل عنوان المهمة');
             return;
         }
-        if (!details) {
-            setError('ادخل تفاصيل المهمة');
-            return;
-        }
 
         setError('');
 
@@ -81,7 +77,6 @@ const Add_EditTask = ({ taskInfo, type, fetchTasks, onClose, showToastNotifying 
         } else {
             editTask()
         }
-
     }
 
     return <>

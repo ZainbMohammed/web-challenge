@@ -67,7 +67,7 @@ const Signup = () => {
 
     }
     return <>
-        <div className='flex items-center justify-center mt-6'>
+        <div className='flex items-center justify-center mt-3'>
             <div className='w-96 border rounded-3xl shadow-2xl bg-white px-7'>
                 <div className='flex justify-center items-center'>
                     <img className='w-48' src={Logo}></img>
@@ -78,7 +78,7 @@ const Signup = () => {
                     <input
                         type='text'
                         placeholder='اسم المستخدم'
-                        className='input-box py-3 shadow-inner'
+                        className='input-box px-3 shadow-inner'
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
@@ -86,7 +86,7 @@ const Signup = () => {
                     <input
                         type='text'
                         placeholder='الإيميل'
-                        className='input-box shadow-inner'
+                        className='input-box shadow-inner px-3'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />

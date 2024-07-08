@@ -11,20 +11,19 @@ const PasswordInput = ({ value, onChange, placeholder }) => {
         setIsShowPassword(!isShowPassword);
     }
     return <>
-        <div className="flex items-center bg-transparent border-[1.5px] px-5 rounded mb-3 shadow-inner">
+        <div className="flex items-center bg-transparent border-[1.5px] px-1 rounded mb-3 shadow-inner">
             <input
                 value={value}
                 onChange={onChange}
                 type={isShowPassword ? "text" : "password"}
                 placeholder={placeholder || "كلمة المرور"}
-                className="w-full text-sm bg-transparent py-3 mr-3 rounded outline-none"
-                autoComplete="off"
+                className="w-full text-sm bg-transparent py-3 mr-3 rounded"
             />
             {/* handle icons of cases */}
             {isShowPassword ? (
                 <FaRegEye
                     size={22}
-                    className="text-primary cursor-pointer"
+                    className="text-primary cursor-pointer "
                     onClick={() => toggleShowPassword()}
                 />
             ) : (

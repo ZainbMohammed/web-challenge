@@ -1,6 +1,6 @@
 # Task Management Web Application
 
-![Project Logo](https://your-project-logo-url.png)
+![Project Logo](./frontend//tasks_managment/src/assets/loogo.png)
 
 ## Live Link / Demo Link
 
@@ -24,8 +24,28 @@ The Tasks Management Web Application is designed to streamline task management p
 
 ## Screenshots
 
+![Login Page](./frontend//tasks_managment/src/assets/readme-images/login.png)
 
 
+![Signup Page](./frontend//tasks_managment/src/assets/readme-images/signup.png)
+
+### Get  Start To Create Tasks
+![Slogan Page](./frontend//tasks_managment/src/assets/readme-images/slogan.png)
+
+
+![Add Task Page](./frontend//tasks_managment/src/assets/readme-images/add-task.png)
+
+
+![Slogan Page](./frontend//tasks_managment/src/assets/readme-images/tasks.png)
+
+
+![Slogan Page](./frontend//tasks_managment/src/assets/readme-images/edit-task.png)
+
+
+![Slogan Page](./frontend//tasks_managment/src/assets/readme-images/deleteTask.png)
+
+
+![Slogan Page](./frontend//tasks_managment/src/assets/readme-images/no-result.png)
 ## Technologies Used
 
 - **Frontend**: React.js, Tailwind CSS

@@ -69,10 +69,9 @@ const navigate = useNavigate();
                 <input 
                     type='text' 
                     placeholder='الإيميل' 
-                    className='input-box py-3 shadow-inner outline-none'
+                    className='input-box shadow-inner px-3'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    autoComplete="off"
                 />
 
                 <PasswordInput 
