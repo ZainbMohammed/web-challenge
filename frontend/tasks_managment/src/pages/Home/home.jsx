@@ -51,7 +51,7 @@ const Home = () => {
       message: ''
     });
   };
-  
+
   // make a model => edit
   const editHandller = (taskInfo) => {
 
@@ -161,7 +161,7 @@ const Home = () => {
     fetchTasks();
   }
 
-  // for tInitialization
+  // useEffect hook to fetch tasks and user info once when the component mounts.
   useEffect(() => {
     fetchTasks();
     getUserInfo();
@@ -194,7 +194,8 @@ const Home = () => {
               isComplete={item.isComplete}
               onEdit={() => { editHandller(item) }}
               onDelete={() => { deleteTask(item) }}
-              onPinned={() => { updateIsComplete(item) }}
+              onComplete={() => { updateIsComplete(item) }}
+              // className='h-full' // Ensure all cards have the same height
 
             />
           })}

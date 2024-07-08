@@ -12,10 +12,35 @@
   }
   body {
     background-color: #fdfeff;
-    overflow: hidden;
+    /* overflow: hidden; */
     user-select: none;
+    /* overflow: auto; */
+    height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
   }
 }
+/* Custom scrollbar styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /* overflow: auto; */
+}
+
+html::-webkit-scrollbar {
+  width: 0px; 
+}
+
+html::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #fff; 
+}
+
 @layer components {
   .input-box {
     @apply w-full text-sm bg-transparent border-[1.5px] px-5 py-3 rounded mb-4 outline-none

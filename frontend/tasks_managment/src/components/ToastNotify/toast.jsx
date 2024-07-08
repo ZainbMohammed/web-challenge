@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { LuCheck } from 'react-icons/lu';
 import { MdDeleteOutline } from 'react-icons/md';
 
@@ -16,7 +16,7 @@ const Toast = ({ isShown, message, type, onClose }) => {
   }, [onClose]);
 
   return <>
-    <div className={`absolute yop-20 right-6 transition-all duration-500 ${isShown ? "opacity-100" : "opacity-0"}`}>
+    <div className={`absolute right-24 bottom-8 transition-all duration-500 ${isShown ? "opacity-100" : "opacity-0"}`}>
       <div className={`min-w-52 bg-white border shadow-2xl rounded-md after:w-[5px] after:h-full ${type === 'delete' ? "bg-red-50" : "bg-green-50"} after:absolute after:left-0 after:top-0 after:rounded-l-lg`}>
         <div className='flex items-center gap-3 py-2 px-4'>
           <div

@@ -1,9 +1,11 @@
+
+// Function to validate an email address using a regex pattern.
 export const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
 }
 
-// to cut first letter from each word
+// get the initials from a name by cut first letter from each word
 export const initName = (name) => {
      if (!name){
         return '';

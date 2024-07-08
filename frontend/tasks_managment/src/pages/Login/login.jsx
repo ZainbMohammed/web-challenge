@@ -42,7 +42,7 @@ const navigate = useNavigate();
             });
             if(response.data && response.data.accessToken){
                 localStorage.setItem('token',response.data.accessToken);
-                navigate('/dashboard');
+                navigate('/home');
             }
         }catch(error){
 
