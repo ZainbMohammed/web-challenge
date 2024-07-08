@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
+
 const PasswordInput = ({ value, onChange, placeholder }) => {
 
+    // to know the case of FaRegEye icon
     const [isShowPassword, setIsShowPassword] = useState(false);
 
-
+    // to switch between 2 cases of password eye icon
     const toggleShowPassword = () => {
         setIsShowPassword(!isShowPassword);
     }
-    return (
+    return <>
         <div className="flex items-center bg-transparent border-[1.5px] px-5 rounded mb-3 shadow-inner">
             <input
                 value={value}
@@ -17,7 +18,9 @@ const PasswordInput = ({ value, onChange, placeholder }) => {
                 type={isShowPassword ? "text" : "password"}
                 placeholder={placeholder || "كلمة المرور"}
                 className="w-full text-sm bg-transparent py-3 mr-3 rounded outline-none"
+                autoComplete="off"
             />
+            {/* handle icons of cases */}
             {isShowPassword ? (
                 <FaRegEye
                     size={22}
@@ -32,7 +35,7 @@ const PasswordInput = ({ value, onChange, placeholder }) => {
                 />
             )}
         </div>
-    )
+    </>
 }
 
 export default PasswordInput

@@ -1,5 +1,6 @@
-import React from 'react'
+import React from 'react';
 
+// Slogan to motivate the user
 const Slogan = () => {
     return <>
         <div>

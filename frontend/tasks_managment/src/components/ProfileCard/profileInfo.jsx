@@ -1,16 +1,18 @@
-import React from 'react'
-import { initName } from '../../utils/helper'
+import React from 'react';
+import { initName } from '../../utils/helper';
 
-const ProfileInfo = ({userInfo,onLogout}) => {
-    
+const ProfileInfo = ({ userInfo, onLogout }) => {
+
+    // it consider the userInfo prop is undefined so handle it by this
     if (!userInfo) {
-        return null; // Or handle the case where userInfo is not available
-      }
-    
-    return (
+        return null;
+    }
+
+    return <>
         <div className='flex items-center gap-3'>
+
             <div className='w-12 h-12 flex items-center justify-center rounded-full text-slate-950 font-semibold bg-slate-100'>
-            {userInfo.fullName ? initName(userInfo.fullName) : 'Loading...'}
+                {userInfo.fullName ? initName(userInfo.fullName) : 'Loading...'}
             </div>
 
             <div>
@@ -19,6 +21,6 @@ const ProfileInfo = ({userInfo,onLogout}) => {
             </div>
 
         </div>
-    )
+    </>
 }
 export default ProfileInfo
