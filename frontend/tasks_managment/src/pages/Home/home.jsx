@@ -181,8 +181,8 @@ const Home = () => {
         clearSearchHandler={clearSearchHandler}
       />
 
-      <div className='container mx-auto min-h-screen'>
-        {tasks.length > 0 ? (<div className='grid grid-cols-3 gap-4 mt-8'>
+      <div className='container mx-auto'>
+        {tasks.length > 0 ? (<div className='grid grid-cols-3 gap-4 m-8'>
 
           {tasks.map((item) => {
 
@@ -195,7 +195,6 @@ const Home = () => {
               onEdit={() => { editHandller(item) }}
               onDelete={() => { deleteTask(item) }}
               onComplete={() => { updateIsComplete(item) }}
-              // className='h-full' // Ensure all cards have the same height
 
             />
           })}
