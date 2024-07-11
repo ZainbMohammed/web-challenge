@@ -2,9 +2,9 @@
 
 <img src='./frontend//tasks_managment/src/assets/readme-images/loogoo.jpg' width='120 px'>
 
-## Live Link / Demo Link
+## Live Link
+https://tasksvaultt.netlify.app/login
 
-[live demo or hosted application ].
 
 ## Table of Contents
 
